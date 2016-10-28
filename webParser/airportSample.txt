@@ -1,0 +1,120 @@
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html lang="zh-TW">
+
+	<HEAD>
+		<title>Real-Time Flight Information</title>
+		<meta content="Microsoft Visual Studio .NET 7.1" name="GENERATOR">
+		<meta content="Visual Basic .NET 7.1" name="CODE_LANGUAGE">
+		<meta content="JavaScript" name="vs_defaultClientScript">
+		<meta content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema">
+		<LINK href="../CSS/01.css" type="text/css" rel="stylesheet">
+	</HEAD>
+	<body>
+		<form name="Form1" method="post" action="realTime.aspx" id="Form1">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUKMjE0Njc4MDQ3Mw9kFgICAQ9kFggCAQ88KwALAQAPFggeCERhdGFLZXlzFgAeC18hSXRlbUNvdW50AgoeCVBhZ2VDb3VudAIBHhVfIURhdGFTb3VyY2VJdGVtQ291bnQCCmQWAmYPZBYUAgEPZBYMZg8PFgIeBFRleHQFAkI3ZGQCAQ8PFgIfBAUDNjI4ZGQCAg9kFgICAQ8PFgIfBAUGTWFrdW5nZGQCAw8PFgIfBAUFMTY6MzBkZAIEDw8WAh8EBQUxNzowNWRkAgUPDxYCHwQFDeaKtemBlEFycml2YWxkZAICD2QWDGYPDxYCHwQFAkI3ZGQCAQ8PFgIfBAUDNjkyZGQCAg9kFgICAQ8PFgIfBAUGS2lubWVuZGQCAw8PFgIfBAUFMTY6MTBkZAIEDw8WAh8EBQUxNzowNWRkAgUPDxYCHwQFDeaKtemBlEFycml2YWxkZAIDD2QWDGYPDxYCHwQFAkFFZGQCAQ8PFgIfBAUDNzY4ZGQCAg9kFgICAQ8PFgIfBAUGS2lubWVuZGQCAw8PFgIfBAUFMTY6MzBkZAIEDw8WAh8EBQUxNzoyNWRkAgUPDxYCHwQFDeaKtemBlEFSUklWRURkZAIED2QWDGYPDxYCHwQFAkFFZGQCAQ8PFgIfBAUDNzg2ZGQCAg9kFgICAQ8PFgIfBAUGTWFrdW5nZGQCAw8PFgIfBAUFMTc6NTBkZAIEDw8WAh8EBQUxODozMGRkAgUPDxYCHwQFDea6luaZgk9OIFRJTUVkZAIFD2QWDGYPDxYCHwQFAkI3ZGQCAQ8PFgIfBAUDNjMwZGQCAg9kFgICAQ8PFgIfBAUGTWFrdW5nZGQCAw8PFgIfBAUFMTg6NTVkZAIEDw8WAh8EBQUxOTozMGRkAgUPDxYCHwQFDea6luaZgk9OIFRJTUVkZAIGD2QWDGYPDxYCHwQFAkI3ZGQCAQ8PFgIfBAUDNjk2ZGQCAg9kFgICAQ8PFgIfBAUGS2lubWVuZGQCAw8PFgIfBAUFMTk6MDVkZAIEDw8WAh8EBQUyMDowMGRkAgUPDxYCHwQFDea6luaZgk9OIFRJTUVkZAIHD2QWDGYPDxYCHwQFAkFFZGQCAQ8PFgIfBAUDOTc0ZGQCAg9kFgICAQ8PFgIfBAUGRnV6aG91ZGQCAw8PFgIfBAUFMTk6MDBkZAIEDw8WAh8EBQUyMDo0MGRkAgUPDxYCHwQFDea6luaZgk9OIFRJTUVkZAIID2QWDGYPDxYCHwQFAkFFZGQCAQ8PFgIfBAUEMTgyNmRkAgIPZBYCAgEPDxYCHwQFCUhvbmcgS29uZ2RkAgMPDxYCHwQFBTE5OjIwZGQCBA8PFgIfBAUFMjA6NTBkZAIFDw8WAh8EBQ3mupbmmYJPTiBUSU1FZGQCCQ9kFgxmDw8WAh8EBQJBRWRkAgEPDxYCHwQFAzc4OGRkAgIPZBYCAgEPDxYCHwQFBk1ha3VuZ2RkAgMPDxYCHwQFBTIwOjEwZGQCBA8PFgIfBAUFMjA6NTBkZAIFDw8WAh8EBQ3mupbmmYJPTiBUSU1FZGQCCg9kFgxmDw8WAh8EBQJBRWRkAgEPDxYCHwQFAzk2NmRkAgIPZBYCAgEPDxYCHwQFBk5pbmdib2RkAgMPDxYCHwQFBTE5OjEwZGQCBA8PFgIfBAUFMjE6MDBkZAIFDw8WAh8EBQ3mupbmmYJPTiBUSU1FZGQCAw88KwALAGQCBQ88KwALAQAPFggfABYAHwECBx8CAgEfAwIHZBYCZg9kFg4CAQ9kFgxmDw8WAh8EBQJCN2RkAgEPDxYCHwQFAzYyOWRkAgIPZBYCAgEPDxYCHwQFBk1ha3VuZ2RkAgMPDxYCHwQFBTE3OjMwZGQCBA8PFgIfBAUFMTg6MDVkZAIFDw8WAh8EBQ7pm6Lnq5lERVBBUlRFRGRkAgIPZBYMZg8PFgIfBAUCR0VkZAIBDw8WAh8EBQMzODBkZAICD2QWAgIBDw8WAh8EBQhTaGFuZ2hhaWRkAgMPDxYCHwQFBTE3OjMwZGQCBA8PFgIfBAUFMTk6MTVkZAIFDw8WAh8EBQ7pm6Lnq5lERVBBUlRFRGRkAgMPZBYMZg8PFgIfBAUCQjdkZAIBDw8WAh8EBQM2OTVkZAICD2QWAgIBDw8WAh8EBQZLaW5tZW5kZAIDDw8WAh8EBQUxNzo0NWRkAgQPDxYCHwQFBTE4OjQwZGQCBQ8PFgIfBAUO6Zui56uZREVQQVJURURkZAIED2QWDGYPDxYCHwQFAkFFZGQCAQ8PFgIfBAUEMTgzMWRkAgIPZBYCAgEPDxYCHwQFCUhvbmcgS29uZ2RkAgMPDxYCHwQFBTE4OjE1ZGQCBA8PFgIfBAUFMTk6NTBkZAIFDw8WAh8EBQ3mupbmmYJPTiBUSU1FZGQCBQ9kFgxmDw8WAh8EBQJBRWRkAgEPDxYCHwQFAzc4N2RkAgIPZBYCAgEPDxYCHwQFBk1ha3VuZ2RkAgMPDxYCHwQFBTE5OjAwZGQCBA8PFgIfBAUFMTk6NDBkZAIFDw8WAh8EBQ3mupbmmYJPTiBUSU1FZGQCBg9kFgxmDw8WAh8EBQJCN2RkAgEPDxYCHwQFAzYzMWRkAgIPZBYCAgEPDxYCHwQFBk1ha3VuZ2RkAgMPDxYCHwQFBTE5OjU1ZGQCBA8PFgIfBAUFMjA6MzBkZAIFDw8WAh8EBQ7loLHliLBDSEVDSyBJTmRkAgcPZBYMZg8PFgIfBAUCQjdkZAIBDw8WAh8EBQQ2MjMxZGQCAg9kFgICAQ8PFgIfBAUGTWFrdW5nZGQCAw8PFgIfBAUFMjA6MzBkZAIEDw8WAh8EBQUyMTowNWRkAgUPDxYCHwQFDea6luaZgk9OIFRJTUVkZAIHDzwrAAsAZGRTrgTKIu+gA4ny8y0wvNhl/ycRow==" />
+
+			
+  <DIV align="left"><A name="content4"> </A><img src="../image/default_image/arrow_001.gif" alt="just for edited" width="10" height="10" align="absMiddle">&nbsp;<FONT color="#333399">Real 
+    -Time Flight Information</FONT></DIV>
+			</TH></TR><TR>
+				<TD bgColor="#ffffff" borderColor="#ffffff">
+					<P align="left"><IMG src="../image/default_image/arrow_004.gif" alt="just for edit" width="6" height="10">&nbsp;Arrival</P>
+					<DIV align="right"><FONT face="新細明體"></FONT>&nbsp;</DIV>
+					<FONT face="新細明體">
+					<DIV align="center"><table class="td-02" cellspacing="0" rules="all" summary="just for edit" bordercolor="#663300" border="1" id="DataGrid1" style="border-color:#663300;border-width:1px;border-style:solid;width:95%;border-collapse:collapse;">
+	<tr align="center" style="color:White;background-color:#663300;">
+		<td>Airline</td><td>Air No</td><td>From</td><td>Departure Time</td><td>Arrival Time</td><td>Note</td>
+	</tr><tr align="center">
+		<td>B7</td><td>628</td><td>
+											<span id="DataGrid1__ctl2_Label2">Makung</span>
+										</td><td>16:30</td><td>17:05</td><td>抵達Arrival</td>
+	</tr><tr align="center">
+		<td>B7</td><td>692</td><td>
+											<span id="DataGrid1__ctl3_Label2">Kinmen</span>
+										</td><td>16:10</td><td>17:05</td><td>抵達Arrival</td>
+	</tr><tr align="center">
+		<td>AE</td><td>768</td><td>
+											<span id="DataGrid1__ctl4_Label2">Kinmen</span>
+										</td><td>16:30</td><td>17:25</td><td>抵達ARRIVED</td>
+	</tr><tr align="center">
+		<td>AE</td><td>786</td><td>
+											<span id="DataGrid1__ctl5_Label2">Makung</span>
+										</td><td>17:50</td><td>18:30</td><td>準時ON TIME</td>
+	</tr><tr align="center">
+		<td>B7</td><td>630</td><td>
+											<span id="DataGrid1__ctl6_Label2">Makung</span>
+										</td><td>18:55</td><td>19:30</td><td>準時ON TIME</td>
+	</tr><tr align="center">
+		<td>B7</td><td>696</td><td>
+											<span id="DataGrid1__ctl7_Label2">Kinmen</span>
+										</td><td>19:05</td><td>20:00</td><td>準時ON TIME</td>
+	</tr><tr align="center">
+		<td>AE</td><td>974</td><td>
+											<span id="DataGrid1__ctl8_Label2">Fuzhou</span>
+										</td><td>19:00</td><td>20:40</td><td>準時ON TIME</td>
+	</tr><tr align="center">
+		<td>AE</td><td>1826</td><td>
+											<span id="DataGrid1__ctl9_Label2">Hong Kong</span>
+										</td><td>19:20</td><td>20:50</td><td>準時ON TIME</td>
+	</tr><tr align="center">
+		<td>AE</td><td>788</td><td>
+											<span id="DataGrid1__ctl10_Label2">Makung</span>
+										</td><td>20:10</td><td>20:50</td><td>準時ON TIME</td>
+	</tr><tr align="center">
+		<td>AE</td><td>966</td><td>
+											<span id="DataGrid1__ctl11_Label2">Ningbo</span>
+										</td><td>19:10</td><td>21:00</td><td>準時ON TIME</td>
+	</tr>
+</table>
+						  <FONT face="&middot;s&sup2;&Oacute;&copy;&uacute;&Aring;&eacute;">
+						  
+						  </FONT></DIV>
+					</FONT>
+					<P align="left"><IMG src="../image/default_image/arrow_004.gif" alt="just for edit" width="6" height="10">&nbsp;Departure</P>
+					<DIV align="right"><FONT face="新細明體"></FONT>&nbsp;</DIV>
+				  <DIV align="center"><table class="td-02" cellspacing="0" rules="all" summary="just for edit" bordercolor="#333399" border="1" id="DataGrid2" style="border-color:#333399;border-width:1px;border-style:solid;width:95%;border-collapse:collapse;">
+	<tr align="center" style="color:White;background-color:#333399;">
+		<td>Air Line</td><td>Air No</td><td>Arrival</td><td>DepartureTime</td><td>Arrival Time</td><td>Note</td>
+	</tr><tr align="center">
+		<td>B7</td><td>629</td><td>
+										<span id="DataGrid2__ctl2_Label1">Makung</span>
+									</td><td>17:30</td><td>18:05</td><td>離站DEPARTED</td>
+	</tr><tr align="center">
+		<td>GE</td><td>380</td><td>
+										<span id="DataGrid2__ctl3_Label1">Shanghai</span>
+									</td><td>17:30</td><td>19:15</td><td>離站DEPARTED</td>
+	</tr><tr align="center">
+		<td>B7</td><td>695</td><td>
+										<span id="DataGrid2__ctl4_Label1">Kinmen</span>
+									</td><td>17:45</td><td>18:40</td><td>離站DEPARTED</td>
+	</tr><tr align="center">
+		<td>AE</td><td>1831</td><td>
+										<span id="DataGrid2__ctl5_Label1">Hong Kong</span>
+									</td><td>18:15</td><td>19:50</td><td>準時ON TIME</td>
+	</tr><tr align="center">
+		<td>AE</td><td>787</td><td>
+										<span id="DataGrid2__ctl6_Label1">Makung</span>
+									</td><td>19:00</td><td>19:40</td><td>準時ON TIME</td>
+	</tr><tr align="center">
+		<td>B7</td><td>631</td><td>
+										<span id="DataGrid2__ctl7_Label1">Makung</span>
+									</td><td>19:55</td><td>20:30</td><td>報到CHECK IN</td>
+	</tr><tr align="center">
+		<td>B7</td><td>6231</td><td>
+										<span id="DataGrid2__ctl8_Label1">Makung</span>
+									</td><td>20:30</td><td>21:05</td><td>準時ON TIME</td>
+	</tr>
+</table>
+					  
+					</DIV>
+					<P align="left"><FONT face="新細明體"></FONT></P>
+				</TD>
+			</TR>
+			<TR>
+				<TD height="38+0%" bgColor="#ffffff" borderColor="#ffffff">
+					<DIV align="right"> </DIV>
+		</form>
+	</body>
+</HTML>

@@ -1,0 +1,8 @@
+dispatch:
+# Default module serves simple hostname request.
+#- url: "hyweb-mobilegip-apps.appspot.com/"
+#  module: default
+
+- url: "manydevices.hyweb-mobilegip-apps.appspot.com/*"
+  module: manydevices
+  

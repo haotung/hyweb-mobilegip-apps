@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Nav>
+	<Metadata>
+		<PubDate>201407112137</PubDate>
+		<dataSource id="ds1"><![CDATA[http://book.tpml.edu.tw/webpac/apiService.do?method=]]></dataSource>
+		<siteName>中華信義神學院圖書館</siteName>
+	</Metadata>
+    <Login required="true" action="ReaderInfoModel:ReaderLogin" allowAutoLogin="true"/>
+	
+	<NavigationBar
+    backgroundimage="images/header.png"
+    displayGridHome="false"
+    useFirstLevelMenu="false"
+    columnsPerRow="3" />
+    
+	<Menu id="menuRoot" menutype="grid" backgroundimage="images/bg02.png">
+        
+        <Node id="menu_book" text="書目服務" icon="images/i03.png" gridicon="images/icon03.png"
+        targetType="hylib" module="BookQueryModule" needLogin="false" />
+        
+        <!--<Node id="menu_news" text="通知訊息" icon="images/i01.png" gridicon="images/icon01.png"-->
+        <!--targetType="nqu" menutype="list"/>-->
+        
+        <Node id="hylib_notification" text="訊息通知" icon="images/i01.png" gridicon="images/icon01.png"
+            targetType="hylib" module="ReaderInfoModel" method="notificationFunctions" needLogin="true"/>
+        
+        <Node id="hylib_userinfo" text="讀者專區" icon="images/i02.png" gridicon="images/icon02.png"
+        targetType="hylib" module="ReaderInfoModel" method="userInfoFunctions" needLogin="true"
+        logoimage="images/logo_text.png"/>
+        
+        <!--<Node id="hylib_news" text="最新消息" icon="images/i0a.png" gridicon="images/icon01.png"-->
+        <!--targetType="hylib" module="ReaderInfoModel" method="GIPNewsLP" needLogin="false"/>-->
+
+
+        <Node id="menu_links" icon="images/i09.png" gridicon="images/icon09.png" text="相關連結" menutype="list"/>
+        <Node id="menu_other" text="其他" icon="images/i05.png" gridicon="images/icon05.png" menutype="list" >
+            
+            <Node id="menu_account" text="登出" targetType="hylib" module="AccountManager"/>
+            <Node id="menu_other" text="軟體資訊" targetType="html" targetPath="cp_sysInfo.html" updateMode="offline"/>
+            <Node id="menu_other" text="隱私權保護政策說明" targetType="html" targetPath="cp_privacy.html" updateMode="offline"/>
+            <!--<Node id="menu_other" text="線上申辦" targetType="url"-->
+            <!--targetUrl="http://www.tpml.edu.tw/lp.asp?ctNode=58168&amp;CtUnit=11187&amp;BaseDSD=7&amp;mp=104021"/>-->
+            <!--<Node id="menu_other" text="請問館員" targetType="url"-->
+            <!--targetUrl="http://webref.tpml.edu.tw/mp.asp?mp=10"/>-->
+            <!--<Node id="menu_other" text="新書通報服務" targetType="url"-->
+            <!--targetUrl="http://book.tpml.edu.tw/webpac/personalization/NewBookNotice.jsp"/>-->
+		</Node>
+        <!--<Node id="link_facebook" text="Facebook" targetType="url" icon="images/i06.png" gridicon="images/icon06.png"-->
+        <!--targetUrl="https://www.facebook.com/pages/%E5%9C%8B%E7%AB%8B%E9%87%91%E9%96%80%E5%A4%A7%E5%AD%B8%E5%9C%96%E6%9B%B8%E9%A4%A8/174165682720099?fref=ts" />-->
+        
+        
+        
+	    
+	</Menu>
+</Nav>

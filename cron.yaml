@@ -1,0 +1,10 @@
+cron:
+#- description: Update Latest Version on Store
+#  url: /updateLatestVersionOnStore.php
+#  schedule: every 1 hours
+
+- description: Clear push notification failed subtasks
+  url: /clear_failed_subtasks.php
+  schedule: every 1 hours
+
+

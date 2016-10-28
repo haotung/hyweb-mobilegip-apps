@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="initial-scale=1.0, maximum-scale=2.0, user-scalable=no, width=device-width">
+<link rel="stylesheet" type="text/css" href="css/admin.css">
+<link rel="stylesheet" type="text/css" href="css/admin.editApp.css">
+<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/aes.js"></script>
+<script src="js/jquery-1.11.0.min.js"></script>
+<script>
+var appId = '{{$appId}}';
+var testAccounts = {{$testAccounts}};
+var relatedLinks = {{$relatedLinks}};
+var useLBS = {{$useLBS}};
+var useSpecifiedBooks = {{$useSpecifiedBooks}};
+var displayNews = {{$displayNews}};
+var pushTasks = new Array();
+</script>
+<script src="js/editApp.js"></script>
+</head>
+<body leftmargin="0" topmargin="0">
+	
+<table id="headerTable" border="0" width="100%" cellspacing="0" style="color:#F2FDF2;min-width:800px;">
+	<tr>
+		<td class="pageTitle" ><span><?PHP echo $progName;?></span><br/>
+			<span class="navigationLinks">
+				<a href="/admin">首頁</a> / 
+				<span id="lblAppName">{{$appMetadata.name}}</span>
+				
+			</span>
+			</td>
+		<td align="right" valign="center">{{$nickname}}您好! （<a href="{{$logoutUrl}}">登出</a>)</td>
+	</tr>
+</table>
+
+<div class="sectionContainer">
+	<table id="tblMetadata" class="sectionLayoutTable">
+		<tr>
+			<td colspan="3" class="sectionTitleTd">
+				基本資料
+			</td>
+		</tr>
+		<tr>
+			<td class="lblKey" width="120">
+				商店名稱
+			</td>
+			<td width="*">
+				<input type="text" id="txtName" value="{{$appMetadata.name}}" dbColumn="name" placeholder="App於架上的完整名稱"/>
+			</td>
+			<td width="200" rowspan="7" valign="top">
+				<div id="appIconBG">
+					<span id="iconHint">拖拉1024x1024圖檔至此</span>
+					<img id="uploadedAppIcon"{{if $appMetadata.icon_file_name > ''}} src="getAppIcon.php?app_id={{$appMetadata.app_id}}&size=200"{{/if}}/>
+					<img id="delIcon" src="images/icon_delete.png" onclick="removeAppIcon()"{{if $appMetadata.icon_file_name > ''}} style="display:block;"{{/if}}/>
+					<div id="fileDragableArea"{{if $appMetadata.icon_file_name > ''}} style="display:none;"{{/if}}></div>
+				</div>
+				
+			</td>
+		</tr>
+		<tr>
+			<td class="lblKey" width="120">
+				桌面名稱
+			</td>
+			<td width="*">
+				<input type="text" id="txtDisplayName" value="{{$appMetadata.display_name}}" dbColumn="display_name" placeholder="顯示於裝置桌面上的名稱"/>
+			</td>
+		</tr>
+		<tr>
+			<td class="lblKey" width="120">
+				App類型
+			</td>
+			<td width="*">
+				<input type="radio" name="rdoAppType" dbColumn="app_type" value="HyLib"{{if $appMetadata.app_type == 'HyLib'}} checked{{/if}}/>純HyLib
+				<input type="radio" name="rdoAppType" dbColumn="app_type" value="GIP"{{if $appMetadata.app_type == 'GIP'}} checked{{/if}}/>其它(含GIP)
+			</td>
+		</tr>
+		<tr>
+			<td class="lblKey" width="120">
+				App ID
+			</td>
+			<td width="*">
+				<span>{{$appMetadata.app_id}}</span>
+			</td>
+		</tr>
+		<tr class="hylibRow" >
+			<td class="lblKey" width="120">
+				HyLib服務網址
+			</td>
+			<td width="*">
+				<input type="text" id="txtHyLibService" value="{{$appMetadata.hylib_url}}" dbColumn="hylib_url" size="50" placeholder="" /><br/>
+				<span class="inputHint">格式如 http://140.124.104.71/apiServiceV2.do?method=</span>
+			</td>
+		</tr>
+		<tr>
+			<td class="lblKey" width="120">
+				GIP LP
+			</td>
+			<td width="*">
+				<input type="text" id="txtGIPLP" value="{{$appMetadata.gip_lp}}" dbColumn="gip_lp" size="50" placeholder="" /><br/>
+				<span class="inputHint">格式如 http://www.cbc.gov.tw/applp.asp?NodeId=</span>
+			</td>
+		</tr>
+		<tr>
+			<td class="lblKey" width="120">
+				GIP CP
+			</td>
+			<td width="*">
+				<input type="text" id="txtGIPCP" value="{{$appMetadata.gip_cp}}" dbColumn="gip_cp" size="50" placeholder="" /><br/>
+				<span class="inputHint">格式如 http://www.cbc.gov.tw/appcp.asp?icuitem=</span>
+			</td>
+		</tr>
+		<tr>
+			<td class="lblKey" width="120">
+				GIP Base URL
+			</td>
+			<td width="*">
+				<input type="text" id="txtBaseURL" value="{{$appMetadata.gip_base_url}}" dbColumn="gip_base_url" size="50" placeholder="" /><br/>
+				<span class="inputHint">如CP附件或圖片會出現如"/public/Attachments/10814081.pdf"的相對網址，這裡輸入在此相對路徑前的網址，如http://www.hyweb.com.tw</span>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="3">
+				<input type="button" id="btnSaveMetadata" value="已儲存" class="savedBtn"/>
+			</tr>
+		</tr>
+	</table>
+</div>
+
+<div class="sectionContainer">
+	<table id="tblStoreData" class="sectionLayoutTable">
+		<tr>
+			<td colspan="2" class="sectionTitleTd">
+				上架表單
+			</td>
+		</tr>
+		<tr>
+			<td class="lblKey" width="120">
+				簡短說明
+			</td>
+			<td width="*">
+				<textarea cols="80" rows="3" id="txtFormShortIntroduction" dbColumn="form_short_introduction" placeholder="Google Play需要的80字以內的簡短說明">{{$appMetadata.form_short_introduction}}</textarea><br/>
+				<span id="lblCharCount" style="color:#808080;font-size:10pt;">已輸入 0 個字元(最多 80 個字元)</span>
+			</td>
+		</tr>
+		<tr>
+			<td class="lblKey" width="120">
+				完整說明
+			</td>
+			<td width="*">
+				<textarea cols="80" rows="6" id="txtFormIntroduction" dbColumn="form_introduction" placeholder="兩平台共用的App完成介紹">{{$appMetadata.form_introduction}}</textarea>
+			</td>
+		</tr>
+		<tr>
+			<td class="lblKey" width="120">
+				關鍵字
+			</td>
+			<td width="*">
+				<input type="text" id="txtKeywords" dbColumn="form_keywords" size="50" value="{{$appMetadata.form_keywords}}" placeholder="請以半形逗號隔開"/>
+			</td>
+		</tr>
+		<tr>
+			<td class="lblKey" width="120">
+				隱私權網址
+			</td>
+			<td width="*">
+				<input type="text" id="txtPrivacyUrl" dbColumn="form_privacy_url" size="50" value="{{$appMetadata.form_privacy_url}}" placeholder=""/>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<input type="button" id="btnSaveStoreData" value="已儲存" class="savedBtn"/>
+			</tr>
+		</tr>
+	</table>
+</div>
+			
+
+<div class="sectionContainer">
+	<table class="sectionLayoutTable">
+		<tr>
+			<td class="sectionTitleTd">
+				基本圖檔
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div style="width:100%;">
+					{{section loop=$basicImages name=i}}
+					<div class="basicImageContainer" style="width:{{$basicImages[i].containerWidth + 4}}px;min-width:160px;">
+						<table border="0" cellspacing="2" align="center" width="156">
+							<tr>
+								<td valign="top" align="center">
+									<div style="position:relative;width:100%;height:100%">
+										<div class="noBasicImageBG" itemName="{{$basicImages[i].item_name}}" style="width:{{$basicImages[i].containerWidth}}px;height:{{$basicImages[i].containerHeight}}px;{{if $basicImages[i].filename == ''}}display:block;{{else}}display:none;{{/if}}">
+											拖拉{{$basicImages[i].contentTypeName}}至此上傳
+										</div>
+										<img class="basicImage" itemName={{$basicImages[i].item_name}} src="getContentFile.php?app_id={{$appId}}&itemName={{$basicImages[i].item_name}}&maxHeight=200" style="width:{{$basicImages[i].containerWidth}}px;height:{{$basicImages[i].containerHeight}}px;{{if $basicImages[i].filename == ''}}display:none;{{else}}display:block;{{/if}}"/>
+										
+										<img class="delIconBasicImage" itemName="{{$basicImages[i].item_name}}" src="images/icon_delete.png"  style="{{if $basicImages[i].filename == ''}}display:none;{{else}}display:block;{{/if}}"/>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td align="center" class="imageHint" style="border-top:solid 1px #C0C0C0;">
+									{{$basicImages[i].description}}<br/>{{$basicImages[i].imageSize}}
+								</td>
+							</tr>
+						</table>
+					</div>
+					{{/section}}
+				</div>
+				
+			</td>
+		</tr>
+	</table>
+</div>
+
+
+<div class="sectionContainer" id="sectionHyLibSettings">
+	<table id="tblHyLibSettings" class="sectionLayoutTable">
+		<tr>
+			<td class="sectionTitleTd">
+				HyLib設定
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<input id="chkSpecifiedBooks" type="checkbox" attrName="useSpecifiedBooks"/>教師指定用書<br/>
+				<input id="chkUseLBS" type="checkbox" attrName="useLBS" />開啟LBS<br/>
+				<input id="chkNews" type="checkbox" attrName="displayNews" />最新消息<br/>
+				測試帳密<br/>
+				<div id="testAccountsContainer">
+				</div>
+				相關連結<br/>
+				<div id="relatedLinksContainer">
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<input type="button" id="btnSaveHyLibSettings" value="已儲存" class="savedBtn"/>
+			</tr>
+		</tr>
+	</table>
+</div>
+
+<div class="sectionContainer" id="sectionHyLib">
+	<table class="sectionLayoutTable">
+		<tr>
+			<td class="sectionTitleTd">
+				HyLib專用圖檔
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div style="width:100%;">
+					{{section loop=$hylibFiles name=i}}
+					<div class="basicImageContainer" style="width:{{$hylibFiles[i].containerWidth + 4}}px;min-width:160px;">
+						<table border="0" cellspacing="2" align="center" width="156">
+							<tr>
+								<td valign="top" align="center">
+									<div style="position:relative;width:100%;height:100%">
+										<div class="noBasicImageBG" itemName="{{$hylibFiles[i].item_name}}" style="width:{{$hylibFiles[i].containerWidth}}px;height:{{$hylibFiles[i].containerHeight}}px;{{if $hylibFiles[i].filename == ''}}display:block;{{else}}display:none;{{/if}}">
+											拖拉{{$hylibFiles[i].contentTypeName}}至此上傳
+										</div>
+										
+									<{{if $hylibFiles[i].is_image}}img{{else}}div{{/if}} class="basicImage{{if !$hylibFiles[i].is_image}} uploadedContentFile{{/if}}" itemName={{$hylibFiles[i].item_name}} {{if $hylibFiles[i].is_image}}src="getContentFile.php?app_id={{$appId}}&itemName={{$hylibFiles[i].item_name}}&maxHeight=200"{{/if}} style="width:{{$hylibFiles[i].containerWidth}}px;height:{{$hylibFiles[i].containerHeight}}px;{{if $hylibFiles[i].filename == ''}}display:none;{{else}}display:block;{{/if}}"{{if $hylibFiles[i].is_image}}/>{{else}}>已上傳</div>{{/if}}
+										
+										<img class="delIconBasicImage" itemName="{{$hylibFiles[i].item_name}}" src="images/icon_delete.png" style="{{if $hylibFiles[i].filename == ''}}display:none;{{else}}display:block;{{/if}}"/>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td align="center" class="imageHint" style="border-top:solid 1px #C0C0C0;">
+									{{$hylibFiles[i].description}}<br/>{{$hylibFiles[i].imageSize}}
+								</td>
+							</tr>
+						</table>
+					</div>
+					{{/section}}
+				</div>
+				
+			</td>
+		</tr>
+	</table>
+</div>
+<div class="sectionContainer">
+	<table class="sectionLayoutTable">
+		<tr>
+			<td class="sectionTitleTd">
+				Android開發作業
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div class="panelBorder">
+					<div class="panelLabel">下載Android專案內容檔</div>
+					<input id="chkDownloadAndroidAppIcon" type="checkbox" checked="checked"/>App icon<br/>
+					　<span lblKey">icon檔名</span><input type="text" id="txtIconFileName" value="icon" style="width:100px;" placeholder="預設為\"icon\""/><br/>
+					<input id="chkDownloadAndroidAssets" type="checkbox" checked="checked" />assets<br/>
+					<input id="chkDownloadAndroidHyLibXMLs" type="checkbox" checked="checked" />標準版HyLib AndroidManifest.xml及res下的XML<br/>
+					<input id="chkDownloadGooglePlayFiles" type="checkbox" />Google Play上架用圖檔<br/>
+					<input type="button" id="btnDownloadAndroidAssets" value="下載" class="{{if $appMetadata.icon_file_name > ''}}enabledBtn{{else}}disabledBtn{{/if}} btnIconDownload"/>
+					
+				</div>
+				
+				
+				
+				
+			</td>
+		</tr>
+	</table>
+</div>
+
+
+<div class="sectionContainer">
+	<table class="sectionLayoutTable">
+		<tr>
+			<td colspan="3" class="sectionTitleTd">
+				iOS開發作業
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div class="panelBorder">
+					<div class="panelLabel">下載Xcode專案內容檔</div>
+					<input id="chkDownloadiOSAppIcon" type="checkbox" checked="checked"/>App icon<br/>
+					<input id="chkDownloadiOSLaunchImage" type="checkbox" checked="checked" />啟動畫面<br/>
+					<div id="iosLaunchImageDownloadOption">
+					　<input id="chkGenerateiPhone6LaunchImage" type="checkbox" checked="checked" />支援iPhone 6 / iPhone 6 plus<br/>
+					　<input id="chkGenerateiPadLaunchImage" type="checkbox" />支援iPad<br/>
+					</div>
+					<input id="chkDownloadHyLibLoginBG" type="checkbox" checked="checked" />HyLib登入頁背景<br/>
+					<input id="chkDownloadiOSAppDataFolder" type="checkbox" checked="checked" />AppData<br/>
+					<input type="button" id="btnDownloadXCAssets" value="下載" class="{{if $appMetadata.icon_file_name > ''}}enabledBtn{{else}}disabledBtn{{/if}} btnIconDownload"/>
+				</div>
+				
+				
+				
+				
+			</td>
+		</tr>
+	</table>
+</div>
+
+<div class="sectionContainer">
+	<table class="sectionLayoutTable">
+		<tr>
+			<td colspan="3" class="sectionTitleTd">
+				menu.xml管理
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div class="panelBorder">
+					<div class="panelLabel">下載HyLib標準版menu.xml</div>
+					<input type="button" id="btnDownloadHyLibMenuXML" value="下載" class="{{if $appMetadata.app_type == 'HyLib'}}enabledBtn{{else}}disabledBtn{{/if}} btnIconDownload"/>
+					
+					<span id="hylibMenuXmlDisabledHint" style="display:{{if $appMetadata.app_type == 'HyLib'}}none{{else}}inline{{/if}};" class="inputHint">因目前只支援HyLib標準版menu.xml產出，需切換為HyLib App才可使用。</span>
+				</div>
+				<div class="panelBorder">
+					<div class="panelLabel">iOS版線上更新menu.xml管理</div>
+					
+				</div>
+				
+				
+				
+				
+			</td>
+		</tr>
+	</table>
+</div>
+
+<div class="sectionContainer">
+	<table class="sectionLayoutTable">
+		<tr>
+			<td colspan="3" class="sectionTitleTd">
+				推播
+			</td>
+		</tr>
+		<tr>
+			<td>
+				最新推播紀錄
+				<div id="pushRecordContainer" style="border:solid 1px #006000;width:100%;height:160px;overflow-y:scroll;">
+					
+					
+				</div>	
+			</td>
+		</tr>
+	</table>
+</div>
+
+
+
+<div class="sectionContainer">
+	<table class="sectionLayoutTable" id="tblTesting">
+		<tr>
+			<td colspan="3" class="sectionTitleTd">
+				測試
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table width="100%">
+					<tr>
+						<td valign="bottom" width="105">
+							<input type="text" id="txtNewVersion" placeholder="版號"/>
+						</td>
+						<td width="205">
+							<div id="installerUploadArea" uploadedFileName="" oriFileName="" uploading="false" class="beforeUploading">
+								拖拉安裝檔於此上傳
+							</div>
+						</td>
+						<td width="90" align="right">
+							<input id="btnRelease" type="button" value="發佈" class="disabledBtn" />
+						</td>
+						<td width="*" rowspan="2">
+							<div id="installerListContainer" style="">
+								
+								
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+							<textarea id="txtWhatsNew" cols="60" rows="8" placeholder="What's new"></textarea>
+						</td>
+					</tr>
+				</table>
+				<div id="txtGenIPA"></div>
+				
+			</td>
+		</tr>
+	</table>
+</div>
+
+
+
+<div class="sectionContainer">
+	<table class="sectionLayoutTable">
+		<tr>
+			<td colspan="3" class="sectionTitleTd">
+				權限控管
+			</td>
+		</tr>
+	</table>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="assets_folder">hylib_ntut</string>
+	<string name="assets_folder_file_count">43</string>
+	<string name="data_source">http://140.124.104.71/apiServiceV2.do?method=</string>
+
+	<string name="website_cp">http://140.124.104.71/appNews/appCp.jsp?icuitem=</string>
+	<string name="isShowLog">true</string>
+    <string name="custom_navigation_bar">false</string>
+    <string name="app_exit_check">true</string>
+    
+    <!-- LBS Function, if open, notice your permission in manifest and asset html file-->
+	<string name="isOpenLBS">false</string>
+	
+	
+	<!-- GCM info -->
+	<string name="open_gcm">true</string>
+	<string name="gcm_server">http://hyweb-mobilegip-apps.appspot.com/registerDevice</string>
+	<string name="gcm_sender_id"></string>
+	<string name="gcm_application_id"></string>
+    
+</resources>

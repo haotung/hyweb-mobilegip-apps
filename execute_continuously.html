@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<script src="js/jquery-1.11.0.min.js"></script>
+<script>
+	
+$(document).ready(function(){
+	
+	setTimeout("reloadPage()", 1000);
+	
+});
+
+function reloadPage(){
+	var currentdate = new Date(); 
+	var datetime = "Start time: " + currentdate.getFullYear() + "/"
+                + addzero(currentdate.getMonth()+1)  + "/" 
+                + addzero(currentdate.getDate()) + " "  
+                + addzero(currentdate.getHours()) + ":"  
+                + addzero(currentdate.getMinutes()) + ":" 
+                + addzero(currentdate.getSeconds());
+    $('#time').html(datetime);
+             
+	$.ajax({
+		url:'move_to_datastore.php',
+	})
+	.done(function( data, textStatus, jqXHR ) {
+		$('#result').html(data);
+		if(data.indexOf("No records to move") == -1){
+			reloadPage();	
+		}
+	});
+}
+
+function addzero(num){
+	if(num < 10){
+		return "0" + num;
+	}
+	else{
+		return "" + num;
+	}
+}
+	
+</script>
+</head>
+<body>
+<div id="time" style="width:600px;height:40px;"></div>
+<div id="result" style="width:600px;height:360px;border:solid 1px #007000;overflow:scroll;"></div>
+
+	
+	
+	
+	
+	
+</body>
+</html>

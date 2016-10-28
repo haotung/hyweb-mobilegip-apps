@@ -1,0 +1,75 @@
+application: hyweb-mobilegip-apps
+module: many-devices
+version: 2
+runtime: php55
+api_version: 1
+threadsafe: yes
+#instance_class: F2
+#automatic_scaling:
+#  min_idle_instances: 0
+#  max_idle_instances: 1 #automatic  # default value
+#  min_pending_latency: 5s
+#  max_pending_latency: 15s
+
+instance_class: B1
+basic_scaling:
+  max_instances: 3
+  idle_timeout: 1m
+
+
+handlers:
+
+- url: /_ah/start
+  script: manydevices/module_test.php
+
+- url: /module_test
+  script: manydevices/module_test.php
+  
+- url: /timeout_test
+  script: timeout_test.php
+    
+- url: /favicon\.ico
+  static_files: favicon.ico
+  upload: favicon\.ico
+
+- url: /registerDevice
+  script: registerDevice.php
+
+- url: /my_adodb_test
+  script: my_adodb_test.php
+
+- url: /notificationConsole
+  script: notificationConsole.php
+  
+
+- url: /images
+  static_dir: images
+
+- url: /admin
+  script: admin.php
+
+- url: /import
+  script: import.php
+
+- url: /login_test
+  script: login_test.php
+
+- url: /sale_statistics
+  script: sale_statistics.php
+
+- url: /js
+  static_dir: js
+
+- url: /css
+  static_dir: css
+
+- url: /cert
+  static_dir: cert
+  application_readable: true
+
+- url: /(.+\.php)
+  script: /\1
+  
+- url: /(.+\.html)
+  script: /\1
+  

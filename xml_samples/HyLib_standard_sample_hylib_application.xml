@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+	<string name="show_teacher_zone">true</string>
+    <string name="show_sort_option_in_list_page">true</string>
+	
+</resources>
